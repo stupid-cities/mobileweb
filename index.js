@@ -38,12 +38,16 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', upload.single('fileupload'), (req, res) => {
+	if(req.file){
 	cloudinary.v2.uploader.upload(req.file.path,
 		{context: {long: req.body.long, lat: req.body.lat}},
 		 (error, result) => {
 		console.log(error);
 		res.render('success')
 	})
+}else{
+	res.render('index');
+}
 })
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))

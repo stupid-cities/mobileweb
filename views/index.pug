@@ -48,6 +48,7 @@ block content
 		locate.on('geolocate', function(pos){
 			var coords = pos.coords;
 			marker.setLngLat([coords.longitude, coords.latitude]);
+			updateLocationData(coords.longitude, coords.latitude);
 		});
 
 		var options = {
@@ -59,7 +60,7 @@ block content
 		function success(pos) {
 			var coords = pos.coords;
 			marker.setLngLat([coords.longitude, coords.latitude]);
-			updateLocationData(coords);
+			updateLocationData(coords.longitude, coords.latitude);
 			map.flyTo({center: [coords.longitude,coords.latitude] , zoom: 15});
 		}
 
@@ -75,17 +76,17 @@ block content
 				.setLngLat(e.lngLat)
 				.addTo(map);
 				var coords = e.lngLat;
-				updateLocationData(coords);
+				updateLocationData(coords.lng,coords.lat);
 		});
 
 		function onDragEnd() {
 			var lngLat = marker.getLngLat();
-			updateLocationData(lngLat);
+			updateLocationData(lngLat.lng, lngLat.lat);
 		}
 
-		function updateLocationData(lngLat){
-			longInput.value = lngLat.lng;
-			latInput.value = lngLat.lat;
+		function updateLocationData(lng, lat){
+			longInput.value = lng;
+			latInput.value = lat;
 		}
 
 		marker.on('dragend', onDragEnd);

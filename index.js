@@ -38,9 +38,10 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', upload.single('fileupload'), (req, res) => {
-	// console.log(req.file)
-	cloudinary.uploader.upload(req.file.path, (result) => {
-		// console.log(result)
+	cloudinary.v2.uploader.upload(req.file.path,
+		{context: {long: req.body.long, lat: req.body.lat}},
+		 (error, result) => {
+		console.log(error);
 		res.render('success')
 	})
 })

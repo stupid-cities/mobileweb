@@ -11,13 +11,15 @@ block content
 			form(method='post' enctype='multipart/form-data')
 				<label id="month"></label>
 				input(type='file' name='fileupload' accept="image/*;capture=camera")
-				input(type='hidden' name='longlat' id='longlat')
+				input(type='hidden' name='long' id='long')
+				input(type='hidden' name='lat' id='lat')
 				input(type='submit' value='Save')
 
 	script.
 		mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZXBod2lsayIsImEiOiJjazVxcDRtY3YwNGVqM2xvNnJobTB0cHpjIn0.C-6rOSTM39XSSutwoOurkA';
 		var coordinates = document.getElementById('coordinates');
-		var longlatInput = document.getElementById('longlat');
+		var longInput = document.getElementById('long');
+		var latInput = document.getElementById('lat');
 		var map = new mapboxgl.Map({
 		container: 'map',
 		style: 'mapbox://styles/mapbox/streets-v11',
@@ -32,50 +34,58 @@ block content
 			trackUserLocation: false
 		})
 		map.addControl(locate);
-		locate.trigger();
+
 
 		var marker = new mapboxgl.Marker({
 		draggable: true
 		})
-		.setLngLat([-2.3599, 51.3758])
+		.setLngLat([0,0])
 		.addTo(map);
 
 		var nav = new mapboxgl.NavigationControl();
 		map.addControl(nav, 'top-right');
+
+		locate.on('geolocate', function(pos){
+			var coords = pos.coords;
+			marker.setLngLat([coords.longitude, coords.latitude]);
+		});
+
+		var options = {
+			enableHighAccuracy: true,
+			timeout: 5000,
+			maximumAge: 0
+		};
+
+		function success(pos) {
+			var coords = pos.coords;
+			marker.setLngLat([coords.longitude, coords.latitude]);
+			updateLocationData(coords);
+			map.flyTo({center: [coords.longitude,coords.latitude] , zoom: 15});
+		}
+
+		function error(err) {
+			console.warn(`ERROR(${err.code}): ${err.message}`);
+		}
+
+		navigator.geolocation.getCurrentPosition(success, error, options)
 
 		var circleMarker;
 		map.on('click', function(e) {
 		    circleMarker = marker
 				.setLngLat(e.lngLat)
 				.addTo(map);
-
-				longlatInput.value = e.lngLat;
-
-		    //var originLatLng;
-
-		    // // listen to the marker dragstart event
-		    // circleMarker.on('dragstart', function (e) {
-		    //     originLatLng = circleMarker.getLatLng();
-		    //     console.log(originLatLng);
-		    // });
-				//
-		    // // listen to the marker dragend event
-		    // circleMarker.on('dragend', function (e) {
-		    //     console.log(circleMarker.getLatLng());
-		    // });
-				//
-		    // // listen to the marker click event
-		    // circleMarker.on('click', function(e){
-		    //     console.log(e);
-		    //     this.setIcon(redIcon);
-		    // });
+				var coords = e.lngLat;
+				updateLocationData(coords);
 		});
 
-
-
 		function onDragEnd() {
-		var lngLat = marker.getLngLat();
-		longlatInput.value = lngLat;
+			var lngLat = marker.getLngLat();
+			updateLocationData(lngLat);
+		}
+
+		function updateLocationData(lngLat){
+			longInput.value = lngLat.lng;
+			latInput.value = lngLat.lat;
 		}
 
 		marker.on('dragend', onDragEnd);

@@ -9,11 +9,10 @@ block content
 		<div class="map-overlay-inner">
 			<h2>Upload Photo</h2>
 			form(method='post' enctype='multipart/form-data')
-				<label id="month"></label>
-				input(type='file' name='fileupload' accept="image/*;capture=camera")
+				input(type='file' name='fileupload' accept="image/*;capture=camera" )
 				input(type='hidden' name='long' id='long')
 				input(type='hidden' name='lat' id='lat')
-				input(type='submit' value='Save')
+				input(type='submit' value='Save' class='btn btn-primary mr-2 copyable')
 
 	script.
 		mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZXBod2lsayIsImEiOiJjazVxcDRtY3YwNGVqM2xvNnJobTB0cHpjIn0.C-6rOSTM39XSSutwoOurkA';

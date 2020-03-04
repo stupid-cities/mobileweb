@@ -1,16 +1,14 @@
 {
   "development": {
-    "username": "",
-    "password": null,
     "url": "postgresql://localhost:5432/events",
     "dialect": "postgres",
     "operatorsAliases": false
   },
   "production": {
-    "username": "",
-    "password": null,
     "url": "",
     "dialect": "postgres",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "native": true,
+    "ssl": true
   }
 }

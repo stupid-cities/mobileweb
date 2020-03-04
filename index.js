@@ -26,7 +26,7 @@ console.log(DB_URL)
 app.db = pgp(DB_URL)
 
 app.get('/', (req, res) => {
-	res.render('index', { links })
+	res.render('index')
 })
 
 app.post('/', upload.single('fileupload'), (req, res) => {

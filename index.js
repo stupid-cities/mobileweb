@@ -22,7 +22,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'pug')
 
-console.log(DB_URL)
 app.db = pgp(DB_URL)
 
 app.get('/', (req, res) => {
@@ -34,7 +33,6 @@ app.post('/', upload.single('fileupload'), (req, res) => {
 		cloudinary.v2.uploader.upload(req.file.path,
 			{context: {long: req.body.long, lat: req.body.lat}},
 		 	(error, result) => {
-				console.log(result.public_id);
 				app.db.none("INSERT INTO events (location, resource) VALUES(ST_GeomFromText('POINT($1 $2)', 4326), $3)",
 					[parseFloat(req.body.long), parseFloat(req.body.lat), result.public_id])
 				res.render('success')

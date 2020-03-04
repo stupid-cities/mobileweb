@@ -4,6 +4,8 @@ const path = require('path')
 const multer = require('multer')
 const pug = require('pug')
 const cloudinary = require('cloudinary')
+const pgp = require('pg-promise')()
+const DB_URL = process.env.DATABASE_URL
 const PORT = process.env.PORT || 4004
 
 const storage = multer.diskStorage({
@@ -15,11 +17,13 @@ const storage = multer.diskStorage({
 	}
 })
 const upload = multer({ storage: storage })
-
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'pug')
+
+console.log(DB_URL)
+app.db = pgp(DB_URL)
 
 app.get('/', (req, res) => {
 	cloudinary.v2.api.resources((error, result) => {
@@ -39,15 +43,17 @@ app.get('/', (req, res) => {
 
 app.post('/', upload.single('fileupload'), (req, res) => {
 	if(req.file){
-	cloudinary.v2.uploader.upload(req.file.path,
-		{context: {long: req.body.long, lat: req.body.lat}},
-		 (error, result) => {
-		console.log(error);
-		res.render('success')
-	})
-}else{
-	res.render('index');
-}
+		cloudinary.v2.uploader.upload(req.file.path,
+			{context: {long: req.body.long, lat: req.body.lat}},
+		 	(error, result) => {
+				console.log(result.public_id);
+				app.db.none("INSERT INTO events (location, resource) VALUES(ST_GeomFromText('POINT($1 $2)', 4326), $3)",
+					[parseFloat(req.body.long), parseFloat(req.body.lat), result.public_id])
+				res.render('success')
+		})
+	}else{
+		res.render('index');
+	}
 })
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))

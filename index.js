@@ -26,19 +26,7 @@ console.log(DB_URL)
 app.db = pgp(DB_URL)
 
 app.get('/', (req, res) => {
-	cloudinary.v2.api.resources((error, result) => {
-		// console.log(result)
-
-		const links = []
-		for (let i = 0; i < result.resources.length; i += 1) {
-			links.push({
-				title: result.resources[i].public_id,
-				link: result.resources[i].secure_url
-			})
-		}
-
-		res.render('index', { links })
-	})
+	res.render('index', { links })
 })
 
 app.post('/', upload.single('fileupload'), (req, res) => {

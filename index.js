@@ -43,6 +43,10 @@ app.post('/', upload.single('fileupload'), (req, res) => {
 	}
 })
 
+app.get('/map', (req, res) => {
+	res.render('map')
+})
+
 app.get('/events', (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	app.db.any("select ST_X(ST_Centroid(ST_Transform(location, 4326))) AS long, ST_Y(ST_Centroid(ST_Transform(location, 4326))) AS lat, resource from events LIMIT 1000;")

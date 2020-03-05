@@ -43,4 +43,25 @@ app.post('/', upload.single('fileupload'), (req, res) => {
 	}
 })
 
+app.get('/events', (req, res) => {
+	res.setHeader('Content-Type', 'application/json');
+	app.db.any("select ST_X(ST_Centroid(ST_Transform(location, 4326))) AS long, ST_Y(ST_Centroid(ST_Transform(location, 4326))) AS lat, resource from events LIMIT 1000;")
+	.then(data => {
+		geojson = {"type": "FeatureCollection",
+	    				 "features": data.map(cord =>
+				 			 	feature = {"type": "Feature",
+				  								 "properties": {"resource": cord.resource},
+													 "geometry":   {"type":"Point","coordinates":[cord.long, cord.lat]}})
+							}
+		res.end(JSON.stringify(geojson));
+	})
+	.catch(error => {
+  	console.log('ERROR:', error);
+  })
+})
+
+app.get('/-/health', (req, res) => {
+	app.db.none("select true");
+})
+
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))

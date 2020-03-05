@@ -1,0 +1,73 @@
+extends layout
+block content
+  <div id="map"></div>
+  script.
+    mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZXBod2lsayIsImEiOiJjazVxcDRtY3YwNGVqM2xvNnJobTB0cHpjIn0.C-6rOSTM39XSSutwoOurkA';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/light-v10',
+      center: [-2.3820395, 51.3801519],
+      zoom: 14,
+    });
+
+    map.on('load', function() {
+      map.addSource('ma', {
+           type: 'geojson',
+           cluster: true,
+           data: '/events'
+      });
+
+      map.addLayer({
+        'id': 'population',
+        'type': 'circle',
+        'source': 'ma',
+        paint: {
+          'circle-color': '#11b4da',
+          'circle-stroke-width': 1,
+          'circle-radius': 10,
+          'circle-stroke-color': '#fff',
+          'circle-radius': [
+            'step',
+            ['get', 'point_count'],
+            15,
+            100,
+            30,
+            750,
+            40
+            ]
+          }
+        });
+
+        map.addLayer({
+          id: 'cluster-count',
+          type: 'symbol',
+          source: 'ma',
+          filter: ['has', 'point_count'],
+          layout: {
+          'text-field': '{point_count_abbreviated}',
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-size': 14
+          }
+          });
+
+
+          // inspect a cluster on click
+          map.on('click', 'clusters', function(e) {
+          var features = map.queryRenderedFeatures(e.point, {
+          layers: ['clusters']
+          });
+          var clusterId = features[0].properties.cluster_id;
+          map.getSource('earthquakes').getClusterExpansionZoom(
+          clusterId,
+          function(err, zoom) {
+          if (err) return;
+
+          map.easeTo({
+          center: features[0].geometry.coordinates,
+          zoom: zoom
+          });
+          }
+          );
+          });
+
+      });

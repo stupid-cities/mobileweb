@@ -11,9 +11,9 @@
 }
 
 @media screen and (max-width: 480px) {
-
-  .map-overlay input{ font-size: 0.8rem; padding: 3px;}
+  .map-overlay input{ font-size: 0.7rem; padding: 3px;}
   .map-overlay { font-size: 0.9rem; }
   .map-overlay {position: absolute; width: 85%; top: 0; left: 0;}
-  .map-overlay h2 {font-size: 1.4rem; margin: 0 0 1px;}
+  .map-overlay h2 {font-size: 1.1rem; margin: 0 0 1px;}
+  .license { font-size: 0.5rem; line-height: 15px; }
 }

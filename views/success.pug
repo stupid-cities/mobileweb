@@ -2,4 +2,27 @@ extends layout
 block content
 	div(style='text-align:center')
 		h1 Thanks! We have saved your info.
+
+		<section id="forms" class="container pb-5">
+		<div class="row">
+			<div class="col-md-12">
+			.content Are there any more details you want to add?
+			form(role="form" action="/events/"+eventId method="POST")
+				<div class="form-group row was-validated copyable">
+				<label class="col-lg-2 col-form-label form-control-label text-muted">Notes</label>
+				<div class="col-lg-10">
+				<textarea class="form-control" type="text" id="notes" name="notes"></textarea>
+				</div>
+				</div>
+				<label class="col-lg-2 col-form-label form-control-label"></label>
+				<div class="col-lg-10">
+				input(type='submit' value='Save' class='btn btn-primary mr-2 copyable')
+				</div>
+				</div>
+
+		</div>
+		<br/>
 		a(href='/') Back to map
+		</div>
+
+		</section>

@@ -29,14 +29,29 @@ app.get('/', (req, res) => {
 	res.render('index')
 })
 
+app.post('/events/:id', (req, res) => {
+	eventId = parseInt(req.params.id);
+	notes = req.body.notes
+	if(notes && eventId){
+		app.db.none("UPDATE events SET notes=$1 where id=$2 AND (notes='' IS NOT FALSE)", [notes, eventId])
+	}
+	res.redirect("/")
+})
+
 app.post('/', upload.single('fileupload'), (req, res) => {
 	if(req.file){
 		cloudinary.v2.uploader.upload(req.file.path,
 			{context: {long: req.body.long, lat: req.body.lat}},
 		 	(error, result) => {
-				app.db.none("INSERT INTO events (location, resource) VALUES(ST_GeomFromText('POINT($1 $2)', 4326), $3)",
-					[parseFloat(req.body.long), parseFloat(req.body.lat), result.public_id])
-				res.render('success')
+		 		app.db.one("INSERT INTO events (location, resource) VALUES(ST_GeomFromText('POINT($1 $2)', 4326), $3) RETURNING id",
+		 			[parseFloat(req.body.long), parseFloat(req.body.lat), result.public_id])
+					.then(data => {
+						eventId= data.id
+						res.render('success', {"eventId": eventId})
+					})
+					.catch(error => {
+        		console.log('ERROR:', error); // print error;
+    			});
 		})
 	}else{
 		res.render('index');

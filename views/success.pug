@@ -6,20 +6,26 @@ block content
 		<section id="forms" class="container pb-5">
 		<div class="row">
 			<div class="col-md-12">
-			.content Are there any more details you want to add?
-			form(role="form" action="/events/"+eventId method="POST")
-				<div class="form-group row was-validated copyable">
-				<label class="col-lg-2 col-form-label form-control-label text-muted">Notes</label>
-				<div class="col-lg-10">
-				<textarea class="form-control" type="text" id="notes" name="notes"></textarea>
-				</div>
-				</div>
-				<label class="col-lg-2 col-form-label form-control-label"></label>
-				<div class="col-lg-10">
-				input(type='submit' value='Save' class='btn btn-primary mr-2 copyable')
-				</div>
-				</div>
-
+				<div class="col-lg-12">Are there any more details you want to add?<br/><br/></div>
+				form(role="form" action="/events/"+eventId method="POST")
+					<div class="form-group row was-validated copyable">
+					<label class="col-lg-2 col-form-label form-control-label text-muted">Impact</label>
+					<label style="padding:10px;" for="happy"><img src="/images/happy_deselected.png" alt="Happy" /><br><input type="radio" name="emotion" id="happy" value="0" />Happy</label>
+					<label style="padding:10px;" for="sad"><img src="/images/sad_deselected.png" alt="Sad" /><br><input type="radio" name="emotion" id="sad" value="1" />Sad</label>
+					<label style="padding:10px;" for="angry"><img src="/images/angry_deselected.png" alt="Angry" /><br><input type="radio" name="emotion" id="angry" value="2" />Angry</label>
+					<label style="padding:10px;" for="danger"><img src="/images/danger_deselected.png" alt="Danger" /><br><input type="radio" name="emotion" id="danger" value="3"/>Danger</label>
+					</div>
+					<div class="form-group row was-validated copyable">
+						<label class="col-lg-2 col-form-label form-control-label text-muted">Notes</label>
+						<div class="col-lg-10">
+							<textarea class="form-control" type="text" id="notes" name="notes"></textarea>
+						</div>
+					</div>
+					<label class="col-lg-2 col-form-label form-control-label"></label>
+					<div class="col-lg-10">
+						input(type='submit' value='Save' class='btn btn-primary mr-2 copyable')
+					</div>
+			</div>
 		</div>
 		<br/>
 		a(href='/') Back to map

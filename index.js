@@ -32,8 +32,9 @@ app.get('/', (req, res) => {
 app.post('/events/:id', (req, res) => {
 	eventId = parseInt(req.params.id);
 	notes = req.body.notes
+	impact = req.body.emotion
 	if(notes && eventId){
-		app.db.none("UPDATE events SET notes=$1 where id=$2 AND (notes='' IS NOT FALSE)", [notes, eventId])
+		app.db.none("UPDATE events SET notes=$1, rating=$2 where id=$3 AND (notes='' IS NOT FALSE)", [notes, impact, eventId])
 	}
 	res.redirect("/")
 })

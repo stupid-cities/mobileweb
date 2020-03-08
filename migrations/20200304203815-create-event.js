@@ -16,7 +16,7 @@ module.exports = {
       },
       category: {
         allowNull: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       rating: {
         allowNull: true,

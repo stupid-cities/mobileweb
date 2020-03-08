@@ -33,8 +33,10 @@ app.post('/events/:id', (req, res) => {
 	eventId = parseInt(req.params.id);
 	notes = req.body.notes
 	impact = req.body.emotion
-	if(notes && eventId){
-		app.db.none("UPDATE events SET notes=$1, rating=$2 where id=$3 AND (notes='' IS NOT FALSE)", [notes, impact, eventId])
+	category = req.body.category
+	if(eventId && (notes || impact || category)){
+		app.db.none("UPDATE events SET notes=$1, rating=$2, category=$3 where id=$4 AND (rating IS NULL)",
+		[notes, impact, category, eventId])
 	}
 	res.redirect("/")
 })

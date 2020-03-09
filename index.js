@@ -42,41 +42,23 @@ app.post('/events/:id', (req, res) => {
 })
 
 app.post('/', upload.single('fileupload'), (req, res) => {
-	public_id = null;
 	if(req.file){
 		cloudinary.v2.uploader.upload(req.file.path,
 			{context: {long: req.body.long, lat: req.body.lat}},
 		 	(error, result) => {
-				public_id = result.public_id
-				app.db.one("INSERT INTO events (location, resource) VALUES(ST_GeomFromText('POINT($1 $2)', 4326), $3) RETURNING id",
-					[parseFloat(req.body.long), parseFloat(req.body.lat), public_id])
+		 		app.db.one("INSERT INTO events (location, resource) VALUES(ST_GeomFromText('POINT($1 $2)', 4326), $3) RETURNING id",
+		 			[parseFloat(req.body.long), parseFloat(req.body.lat), result.public_id])
 					.then(data => {
 						eventId= data.id
 						res.render('success', {"eventId": eventId})
 					})
 					.catch(error => {
-						console.log('ERROR:', error); // print error;
-					});
-			})
+        		console.log('ERROR:', error); // print error;
+    			});
+		})
+	}else{
+		res.render('index');
 	}
-	else{
-		public_id= "bristol_workshop";
-		app.db.one("INSERT INTO events (location, resource) VALUES(ST_GeomFromText('POINT($1 $2)', 4326), $3) RETURNING id",
-			[parseFloat(req.body.long), parseFloat(req.body.lat), public_id])
-			.then(data => {
-				eventId= data.id
-				res.render('success', {"eventId": eventId})
-			})
-			.catch(error => {
-				console.log('ERROR:', error); // print error;
-			});
-	}
-
-
-
-	//else{
-		//res.render('index');
-
 })
 
 app.get('/map', (req, res) => {

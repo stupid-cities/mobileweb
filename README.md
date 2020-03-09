@@ -1,6 +1,23 @@
 # Mobile Web
 
-`
+## Install
+
+```
 yarn install
-CLOUDINARY_URL="..." yarn start
-`
+```
+
+## Running
+
+```
+DATABASE_URL='...' CLOUDINARY_URL='...' yarn start
+```
+
+
+## Database
+
+Postgres with following extensions (required for accurate storage and querying of long/lat geo info):
+```
+CREATE EXTENSION hstore;
+CREATE EXTENSION postgis;
+CREATE EXTENSION postgis_topology;
+```

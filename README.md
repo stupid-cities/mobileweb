@@ -1,5 +1,7 @@
 # Mobile Web
 
+Runs: http://alpha.stupidcities.com
+
 ## Install
 
 ```

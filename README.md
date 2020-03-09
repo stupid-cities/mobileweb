@@ -17,7 +17,15 @@ DATABASE_URL='...' CLOUDINARY_URL='...' yarn start
 
 ## Database
 
-Postgres with following extensions (required for accurate storage and querying of long/lat geo info):
+Local DB setup
+
+```
+createdb events
+```
+
+psql 'postgresql://localhost:5432/events'
+
+Add the following Postgres extensions (required for accurate storage and querying of long/lat geo info):
 
 ```
 CREATE EXTENSION hstore;
@@ -30,3 +38,4 @@ Database Migrations run through:
 ```
 npx sequelize-cli db:migrate
 ```
+

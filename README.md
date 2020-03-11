@@ -17,7 +17,7 @@ DATABASE_URL='...' CLOUDINARY_URL='...' yarn start
 
 ## Database
 
-Local DB setup
+Local DB setup. You might have to install postgres and postgis: https://postgis.net/install
 
 ```
 createdb events

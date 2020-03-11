@@ -67,7 +67,7 @@ app.get('/map', (req, res) => {
 
 app.get('/events', (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	app.db.any("select ST_X(ST_Centroid(ST_Transform(location, 4326))) AS long, ST_Y(ST_Centroid(ST_Transform(location, 4326))) AS lat, resource from events LIMIT 1000;")
+	app.db.any("select ST_X(ST_Centroid(ST_Transform(location, 4326))) AS long, ST_Y(ST_Centroid(ST_Transform(location, 4326))) AS lat, resource, rating from events LIMIT 1000;")
 	.then(data => {
 		geojson = {"type": "FeatureCollection",
 	    				 "features": data.map(cord =>

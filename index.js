@@ -72,7 +72,7 @@ app.get('/events', (req, res) => {
 		geojson = {"type": "FeatureCollection",
 	    				 "features": data.map(cord =>
 				 			 	feature = {"type": "Feature",
-				  								 "properties": {"resource": cord.resource},
+				  								 "properties": {"resource": cord.resource, "rating": cord.rating},
 													 "geometry":   {"type":"Point","coordinates":[cord.long, cord.lat]}})
 							}
 		res.end(JSON.stringify(geojson));

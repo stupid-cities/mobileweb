@@ -10,11 +10,18 @@ block content
       zoom: 14,
     });
 
+    var good = ['<=', ['get', 'rating'], 0];
+    var bad = ['>', ['get', 'rating'], 0];
+
     map.on('load', function() {
       map.addSource('ma', {
            type: 'geojson',
            cluster: true,
-           data: '/events'
+           data: '/events',
+           'clusterProperties': {
+            'good': ['+', ['case', good, 1, 0]],
+            'bad': ['+', ['case', bad, 1, 0]],
+           },
       });
 
       map.addLayer({
@@ -22,7 +29,7 @@ block content
         'type': 'circle',
         'source': 'ma',
         paint: {
-          'circle-color': '#11b4da',
+        'circle-color': ['case', good, 'green', bad, 'red', 'blue'],
           'circle-stroke-width': 1,
           'circle-radius': 10,
           'circle-stroke-color': '#fff',

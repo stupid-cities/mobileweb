@@ -5,20 +5,29 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "dev": "postcss ./public/css/style.css -m -o ./public/style-compiled.css -w && npx babel ./public/scripts/script.js -w -o ./public/scripts/script-compiled.js -s && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "autoprefixer": "^9.7.4",
     "body-parser": "^1.18.3",
     "cloudinary": "^1.19.0",
+    "dotenv": "^8.2.0",
     "express": "^4.16.4",
     "multer": "^1.4.1",
     "path": "^0.12.7",
     "pg-native": "^3.0.0",
     "pg-promise": "^10.4.4",
+    "postcss-autoreset": "^2.0.2",
+    "postcss-preset-env": "^6.7.0",
     "pug": "^2.0.3",
     "sequelize": "^5.21.5",
     "sequelize-cli": "^5.5.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "postcss-cli": "^7.1.0"
   }
 }

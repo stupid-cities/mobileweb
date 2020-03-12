@@ -14,6 +14,8 @@ yarn install
 DATABASE_URL='...' CLOUDINARY_URL='...' yarn start
 ```
 
+> Run `yarn dev` if you are doing any FE work to run postcss & babel on FE assets
+
 
 ## Database
 

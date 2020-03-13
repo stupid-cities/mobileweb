@@ -1,0 +1,52 @@
+/*
+* variables
+* utilities
+*/
+
+/* here lies colours, sizes etc... for fonts see typography - familiarise yourself with this and use within css so there's no inconsistancies */
+
+:root {
+	--green: #4afa58;
+	--blue: #1cc9fe;
+	--pink: #ff1694;
+	--darkPink: #93005b;
+	--yellow: #ffd406;
+	--white: #f1f1f1;
+	--black: #000036;
+
+	--light: var(--white);
+	--dark: var(--black);
+	--primOne: var(--yellow);
+	--primTwo: var(--pink);
+	--secOne: var(--blue);
+	--secTwo: var(--green);
+	--textAlt: var(--darkPink);
+
+	--size: 1rem;
+
+}
+
+/* utility classes */
+
+/* backgrounds */
+.back-light {
+	background: var(--light) url('../../images/stone.png') no-repeat center center;
+	background-size: cover;
+}
+
+.back-dark {
+	background: var(--dark) url('../../images/stone.png') no-repeat center center;
+	background-size: cover;
+	background-blend-mode: multiply;
+	color: var(--light);
+}
+
+.camera-overlay {
+	background: var(--dark) url('../../images/overlay.png') no-repeat center center;
+	background-size: cover;
+}
+
+*:focus {
+	outline: 4px auto var(--secOne) !important;
+}
+

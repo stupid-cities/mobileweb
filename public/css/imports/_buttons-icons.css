@@ -1,0 +1,51 @@
+.btn {
+
+}
+.btn--regular {
+	display: inline-block;
+	padding: calc(var(--size)/2) var(--size);
+	background-color: var(--light);
+	border: 6px solid var(--dark);
+	font-family: var(--fontAlt);
+	font-weight: bold;
+	font-size: var(--fontSize);
+}
+.btn--regular:hover {
+	cursor: pointer;
+	background-color: var(--dark);
+	border: 6px solid var(--light);
+	color: var(--light);
+}
+
+.btn--action {
+	display: inline-block;
+	padding: calc(var(--size)*2);
+	background: var(--primTwo) linear-gradient(0deg, var(--primTwo), var(--primOne)) no-repeat top left;
+	-webkit-mask-image: radial-gradient(closest-side,black 60%, transparent 99%);
+}
+.btn--action span {display: none;}
+
+.btn--ui {
+	display: inline-block;
+	padding: var(--size);
+	background-color: var(--dark);
+}
+.btn--ui span {display: none;}
+.btn--ui svg {stroke: var(--light);}
+
+.mood--happy {
+	background-color: var(--secTwo);
+	background-image: none;
+}
+.mood--meh {
+	background-color: var(--secOne);
+	background-image: none;
+}
+.mood--sad {
+	background-color: var(--primOne);
+	background-image: none;
+}
+.mood--angry {
+	background-color: var(--primTwo);
+	background-image: none;
+}

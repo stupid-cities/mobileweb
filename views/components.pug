@@ -1,0 +1,110 @@
+extends layout
+block content
+
+	h2 colours
+
+	block colours
+		.colours
+			ul
+				li light
+				li dark
+				li primOne
+				li primTwo
+				li secOne
+				li secTwo
+				li textAlt
+
+	h2 Typography
+
+	header.header--large--dark
+		h1 Dark large header
+
+	header.header--large
+		h1 Large header
+
+	h3.heading--small Small heading
+
+	p All text should be in a paragraph like this one Lorem ipsum dolor, sit amet consectetur adipisicing elit. #[a(href="#") Ab aliquam voluptates tempora] maiores minus sint, quidem officia nisi quod similique excepturi fugiat alias molestias, debitis amet nulla nostrum, eaque at.
+
+	h2 Buttons & Icons
+
+	//- can be camera, frown, pin, meh, smile, upload, user, alert, close, right, left, up, down, info
+	mixin svg(iconname)
+		case iconname
+			when 'camera'
+				include ../public/images/svgs/camera.svg
+			when 'frown'
+				include ../public/images/svgs/frown.svg
+			when 'pin'
+				include ../public/images/svgs/map-pin.svg
+			when 'meh'
+				include ../public/images/svgs/meh.svg
+			when 'smile'
+				include ../public/images/svgs/smile.svg
+			when 'upload'
+				include ../public/images/svgs/upload.svg
+			when 'alert'
+				include ../public/images/svgs/alert.svg
+			when 'user'
+				include ../public/images/svgs/user.svg
+			when 'close'
+				include ../public/images/svgs/x.svg
+			when 'up'
+				include ../public/images/svgs/chevron-up.svg
+			when 'down'
+				include ../public/images/svgs/chevron-down.svg
+			when 'left'
+				include ../public/images/svgs/chevron-left.svg
+			when 'right'
+				include ../public/images/svgs/chevron-right.svg
+			when 'info'
+				include ../public/images/svgs/info.svg
+
+
+	+svg('camera')
+	+svg('frown')
+	+svg('pin')
+	+svg('meh')
+	+svg('smile')
+	+svg('upload')
+	+svg('alert')
+	+svg('user')
+	+svg('close')
+	+svg('up')
+	+svg('down')
+	+svg('left')
+	+svg('right')
+	+svg('info')
+
+	button.btn--regular Regular
+
+	button.btn--action(aria-labelledby="label")
+		span#label action
+		+svg('camera')
+
+	button.btn--ui(aria-labelledby="uilabel")
+		span#uilabel action
+		+svg('left')
+
+	div.mood--happy.btn--action(aria-labelledby="moodlabel")
+		span#moodlabel happy
+		+svg('smile')
+
+	div.mood--meh.btn--action(aria-labelledby="moodlabel")
+		span#moodlabel meh
+		+svg('meh')
+
+	div.mood--sad.btn--action(aria-labelledby="moodlabel")
+		span#moodlabel sad
+		+svg('frown')
+
+	div.mood--angry.btn--action(aria-labelledby="moodlabel")
+		span#moodlabel angry
+		+svg('alert')
+
+	h2 Utilities
+
+	.back-light= '.back-light'
+	.back-dark= '.back-dark'
+	.camera-overlay= '.camera-overlay'
+

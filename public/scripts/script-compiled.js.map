@@ -1,0 +1,1 @@
+{"version":3,"sources":["script.js"],"names":[],"mappings":"AAAA,QAAQ,KAAR;;AAEA,QAAQ,GAAR,CAAY,IAAZ","file":"script-compiled.js","sourcesContent":["console.clear();\n\nconsole.log('hi');"]}

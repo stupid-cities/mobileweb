@@ -1,0 +1,63 @@
+:root {
+	--fontSize: calc(var(--size)*1.2);
+	--headerBig: calc(var(--fontSize)*1.6);
+	--headerSmall: calc(var(--fontSize)*1.2);
+
+	--font: 'Nanum Gothic', sans-serif;
+	--fontAlt: "Courier New", monospace;
+
+	--linkCol: var(--pink);
+}
+
+/*fonts*/
+body {
+	background-color: var(--light);
+	font-family: var(--font);
+	line-height: 1.3;
+	color: var(--dark);
+}
+@media screen and (max-width: 700px) {
+	:root {
+		--size: 0.8rem;
+	}
+}
+p {
+	font-size: var(--fontSize);
+}
+a {
+	color: var(--linkCol);
+	text-decoration: none;
+}
+a:hover, a:focus, a:active {
+	text-decoration: underline;
+}
+
+.heading--small, h2, h3 {
+	font-size: var(--headerSmall);
+	font-weight: bold;
+}
+
+.header--large--dark {
+	padding: var(--size);
+	background-color: var(--dark);
+}
+.header--large--dark h1,
+.header--large--dark h2,
+.header--large--dark .heading
+{
+	font-size: var(--headerBig);
+	font-weight: bold;
+	color: var(--light);
+}
+
+.header--large {
+	padding: var(--size);
+}
+.header--large h1,
+.header--large h2,
+.header--large .heading
+{
+	font-size: var(--headerBig);
+	font-weight: bold;
+}
+

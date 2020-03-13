@@ -1,0 +1,13 @@
+.colours li:nth-of-type(1) {background-color: var(--light);}
+.colours li:nth-of-type(2) {background-color: var(--dark);}
+.colours li:nth-of-type(3) {background-color: var(--primOne);}
+.colours li:nth-of-type(4) {background-color: var(--primTwo);}
+.colours li:nth-of-type(5) {background-color: var(--secOne);}
+.colours li:nth-of-type(6) {background-color: var(--secTwo);}
+.colours li:nth-of-type(7) {background-color: var(--textAlt);}
+
+[class*="back"], .camera-overlay {
+	height: 200px; width: 200px;
+}
+
+h2 {margin: 1rem 0;}

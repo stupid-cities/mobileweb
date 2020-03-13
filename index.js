@@ -87,4 +87,8 @@ app.get('/-/health', (req, res) => {
 	app.db.none("select true");
 })
 
+app.get('/comps', (req, res) => {
+	res.render('components')
+})
+
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))

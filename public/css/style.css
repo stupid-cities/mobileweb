@@ -1,4 +1,19 @@
- body { margin: 0; padding: 0; }
+/*
+* no css exists in this file
+* all styles are held in their appropriate include files
+* if you need to add css find the file or create a new one for a new component
+* remember to @include the file if you create a new one
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700&display=swap');
+@import 'imports/_reset.css';
+@import 'imports/_settings.css';
+@import 'imports/_comp-temp.css'; /* remove this for production */
+@import 'imports/_typography.css';
+@import 'imports/_buttons-icons.css';
+
+
+body { margin: 0; padding: 0; }
 #map { position: absolute; top: 0; bottom: 0; width: 100%; height: 100% }
 #panel { position: absolute; top: 5; bottom: 5; background: #ffffff; border: 1px; }
 .map-overlay { font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif; position: absolute; width: 25%; top: 0; left: 0; padding: 10px;}

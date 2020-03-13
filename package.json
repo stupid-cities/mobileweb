@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "postcss ./public/css/style.css -m -o ./public/style-compiled.css -w && npx babel ./public/scripts/script.js -w -o ./public/scripts/script-compiled.js -s && node index.js",
+    "dev": "npm start & npm run build-css & npm run build-js",
+    "build-css": "postcss ./public/css/style.css -m -o ./public/css/style-compiled.css -w",
+    "build-js": "npx babel ./public/scripts/script.js -w -o ./public/scripts/script-compiled.js -s",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -21,6 +23,7 @@
     "pg-native": "^3.0.0",
     "pg-promise": "^10.4.4",
     "postcss-autoreset": "^2.0.2",
+    "postcss-easy-import": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
     "pug": "^2.0.3",
     "sequelize": "^5.21.5",

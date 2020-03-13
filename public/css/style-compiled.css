@@ -1,0 +1,268 @@
+
+
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700&display=swap');
+/*
+* no css exists in this file
+* all styles are held in their appropriate include files
+* if you need to add css find the file or create a new one for a new component
+* remember to @include the file if you create a new one
+*/
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*
+* variables
+* utilities
+*/
+/* here lies colours, sizes etc... for fonts see typography - familiarise yourself with this and use within css so there's no inconsistancies */
+:root {
+	--green: #4afa58;
+	--blue: #1cc9fe;
+	--pink: #ff1694;
+	--darkPink: #93005b;
+	--yellow: #ffd406;
+	--white: #f1f1f1;
+	--black: #000036;
+
+	--light: var(--white);
+	--dark: var(--black);
+	--primOne: var(--yellow);
+	--primTwo: var(--pink);
+	--secOne: var(--blue);
+	--secTwo: var(--green);
+	--textAlt: var(--darkPink);
+
+	--size: 1rem;
+
+}
+/* utility classes */
+/* backgrounds */
+.back-light {
+	background: #f1f1f1 url('../../images/stone.png') no-repeat center center;
+	background: var(--light) url('../../images/stone.png') no-repeat center center;
+	background-size: cover;
+}
+.back-dark {
+	background: #000036 url('../../images/stone.png') no-repeat center center;
+	background: var(--dark) url('../../images/stone.png') no-repeat center center;
+	background-size: cover;
+	background-blend-mode: multiply;
+	color: #f1f1f1;
+	color: var(--light);
+}
+.camera-overlay {
+	background: #000036 url('../../images/overlay.png') no-repeat center center;
+	background: var(--dark) url('../../images/overlay.png') no-repeat center center;
+	background-size: cover;
+}
+*:focus {
+	outline: 4px auto #1cc9fe !important;
+	outline: 4px auto var(--secOne) !important;
+}
+.colours li:nth-of-type(1) {background-color: #f1f1f1;background-color: var(--light);}
+.colours li:nth-of-type(2) {background-color: #000036;background-color: var(--dark);}
+.colours li:nth-of-type(3) {background-color: #ffd406;background-color: var(--primOne);}
+.colours li:nth-of-type(4) {background-color: #ff1694;background-color: var(--primTwo);}
+.colours li:nth-of-type(5) {background-color: #1cc9fe;background-color: var(--secOne);}
+.colours li:nth-of-type(6) {background-color: #4afa58;background-color: var(--secTwo);}
+.colours li:nth-of-type(7) {background-color: #93005b;background-color: var(--textAlt);}
+[class*="back"], .camera-overlay {
+	height: 200px; width: 200px;
+}
+h2 {margin: 1rem 0;}
+/* remove this for production */
+:root {
+	--fontSize: calc(var(--size)*1.2);
+	--headerBig: calc(var(--fontSize)*1.6);
+	--headerSmall: calc(var(--fontSize)*1.2);
+
+	--font: 'Nanum Gothic', sans-serif;
+	--fontAlt: "Courier New", monospace;
+
+	--linkCol: var(--pink);
+}
+/*fonts*/
+body {
+	background-color: #f1f1f1;
+	background-color: var(--light);
+	font-family: 'Nanum Gothic', sans-serif;
+	font-family: var(--font);
+	line-height: 1.3;
+	color: #000036;
+	color: var(--dark);
+}
+@media screen and (max-width: 700px) {
+	:root {
+		--size: 0.8rem;
+	}
+}
+p {
+	font-size: calc(1rem*1.2);
+	font-size: var(--fontSize);
+}
+a {
+	color: #ff1694;
+	color: var(--linkCol);
+	text-decoration: none;
+}
+a:hover, a:focus, a:active {
+	text-decoration: underline;
+}
+.heading--small, h2, h3 {
+	font-size: calc(calc(1rem*1.2)*1.2);
+	font-size: var(--headerSmall);
+	font-weight: bold;
+}
+.header--large--dark {
+	padding: 1rem;
+	padding: var(--size);
+	background-color: #000036;
+	background-color: var(--dark);
+}
+.header--large--dark h1,
+.header--large--dark h2,
+.header--large--dark .heading
+{
+	font-size: calc(calc(1rem*1.2)*1.6);
+	font-size: var(--headerBig);
+	font-weight: bold;
+	color: #f1f1f1;
+	color: var(--light);
+}
+.header--large {
+	padding: 1rem;
+	padding: var(--size);
+}
+.header--large h1,
+.header--large h2,
+.header--large .heading
+{
+	font-size: calc(calc(1rem*1.2)*1.6);
+	font-size: var(--headerBig);
+	font-weight: bold;
+}
+.btn {
+
+}
+.btn--regular {
+	display: inline-block;
+	padding: calc(1rem/2) 1rem;
+	padding: calc(var(--size)/2) var(--size);
+	background-color: #f1f1f1;
+	background-color: var(--light);
+	border: 6px solid #000036;
+	border: 6px solid var(--dark);
+	font-family: "Courier New", monospace;
+	font-family: var(--fontAlt);
+	font-weight: bold;
+	font-size: calc(1rem*1.2);
+	font-size: var(--fontSize);
+}
+.btn--regular:hover {
+	cursor: pointer;
+	background-color: #000036;
+	background-color: var(--dark);
+	border: 6px solid #f1f1f1;
+	border: 6px solid var(--light);
+	color: #f1f1f1;
+	color: var(--light);
+}
+.btn--action {
+	display: inline-block;
+	padding: calc(1rem*2);
+	padding: calc(var(--size)*2);
+	background: #ff1694 linear-gradient(0deg, #ff1694, #ffd406) no-repeat top left;
+	background: var(--primTwo) linear-gradient(0deg, var(--primTwo), var(--primOne)) no-repeat top left;
+	-webkit-mask-image: radial-gradient(closest-side,black 60%, transparent 99%);
+}
+.btn--action span {display: none;}
+.btn--ui {
+	display: inline-block;
+	padding: 1rem;
+	padding: var(--size);
+	background-color: #000036;
+	background-color: var(--dark);
+}
+.btn--ui span {display: none;}
+.btn--ui svg {stroke: #f1f1f1;stroke: var(--light);}
+.mood--happy {
+	background-color: #4afa58;
+	background-color: var(--secTwo);
+	background-image: none;
+}
+.mood--meh {
+	background-color: #1cc9fe;
+	background-color: var(--secOne);
+	background-image: none;
+}
+.mood--sad {
+	background-color: #ffd406;
+	background-color: var(--primOne);
+	background-image: none;
+}
+.mood--angry {
+	background-color: #ff1694;
+	background-color: var(--primTwo);
+	background-image: none;
+}
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; height: 100% }
+#panel { position: absolute; top: 5; bottom: 5; background: #ffffff; border: 1px; }
+.map-overlay { font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif; position: absolute; width: 25%; top: 0; left: 0; padding: 10px;}
+.map-overlay .map-overlay-inner {background-color: #fff;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);border-radius: 3px;padding: 10px;margin-bottom: 10px;}
+.map-overlay h2 {display: block;margin: 0 0 10px;}
+.map-overlay input {display: inline-block;width: 100%;position: relative;margin: 0;cursor: ew-resize; padding: 10px;}
+.license { font-size: 0.7rem; line-height: 15px; }
+@media screen and (max-width: 992px) {
+}
+@media screen and (max-width: 580px) {
+  .map-overlay input{ font-size: 0.7rem; padding: 3px;}
+  .map-overlay { font-size: 0.9rem; }
+  .map-overlay {position: absolute; width: 85%; top: 0; left: 0;}
+  .map-overlay h2 {font-size: 1.1rem; margin: 0 0 1px;}
+  .license { font-size: 0.5rem; line-height: 15px; }
+}

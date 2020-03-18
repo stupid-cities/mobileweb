@@ -25,7 +25,7 @@ Add any new components to view into `pattern-library.pug`. Every component is a 
 
 ## Database
 
-Local DB setup
+Local DB setup. You might have to install postgres and postgis: https://postgis.net/install
 
 ```
 createdb events

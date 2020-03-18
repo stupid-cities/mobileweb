@@ -14,7 +14,13 @@ yarn install
 DATABASE_URL='...' CLOUDINARY_URL='...' yarn start
 ```
 
+## Front End
+
 > Run `yarn dev` if you are doing any FE work to run postcss & babel on FE assets
+
+View the pattern library at `/pattern-lib`
+
+Add any new components to view into `pattern-library.pug`. Every component is a mixin which you then add to `components.pug` which is included in every view
 
 
 ## Database

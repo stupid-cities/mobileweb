@@ -18,18 +18,49 @@ const storage = multer.diskStorage({
 	}
 })
 const upload = multer({ storage: storage })
+
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.set('view engine', 'pug')
-
 app.db = pgp(DB_URL)
 
+// homepage
 app.get('/', (req, res) => {
 	res.render('index')
 })
+// add a point
+app.get('/add', (req, res) => {
+	res.render('add')
+})
+// populated map view
+app.get('/map', (req, res) => {
+	res.render('map')
+})
 
+// retrieve points
+app.get('/events', (req, res) => {
+	res.setHeader('Content-Type', 'application/json');
+	app.db.any("select ST_X(ST_Centroid(ST_Transform(location, 4326))) AS long, ST_Y(ST_Centroid(ST_Transform(location, 4326))) AS lat, resource, rating from events LIMIT 1000;")
+		.then(data => {
+			geojson = {
+				"type": "FeatureCollection",
+				"features": data.map(cord =>
+					feature = {
+						"type": "Feature",
+						"properties": { "resource": cord.resource, "rating": cord.rating },
+						"geometry": { "type": "Point", "coordinates": [cord.long, cord.lat] }
+					})
+			}
+			res.end(JSON.stringify(geojson));
+		})
+		.catch(error => {
+			console.log('ERROR:', error);
+		})
+})
+
+// post event data
 app.post('/events/:id', (req, res) => {
 	eventId = parseInt(req.params.id);
 	notes = req.body.notes
@@ -39,10 +70,10 @@ app.post('/events/:id', (req, res) => {
 		app.db.none("UPDATE events SET notes=$1, rating=$2, category=$3 where id=$4 AND (rating IS NULL)",
 		[notes, impact, category, eventId])
 	}
-	res.redirect("/")
+	res.redirect("/add")
 })
-
-app.post('/', upload.single('fileupload'), (req, res) => {
+// post lat/lng and image
+app.post('/add', upload.single('fileupload'), (req, res) => {
 	if(req.file){
 		cloudinary.v2.uploader.upload(req.file.path,
 			{context: {long: req.body.long, lat: req.body.lat}},
@@ -53,35 +84,21 @@ app.post('/', upload.single('fileupload'), (req, res) => {
 						eventId= data.id
 						res.render('success', {"eventId": eventId})
 					})
-					.catch(error => {
-        		console.log('ERROR:', error); // print error;
+						.catch(error => {
+						// send back to add page with error to try again
+							res.render('add', {
+								"alert": true,
+								"type": "error",
+								"message": "We\'re sorry there was a problem uploading your image, please try again"
+							})
+        			console.log('ERROR:', error); // print error;
     			});
 		})
 	}else{
-		res.render('index');
+		res.render('add');
 	}
 })
 
-app.get('/map', (req, res) => {
-	res.render('map')
-})
-
-app.get('/events', (req, res) => {
-	res.setHeader('Content-Type', 'application/json');
-	app.db.any("select ST_X(ST_Centroid(ST_Transform(location, 4326))) AS long, ST_Y(ST_Centroid(ST_Transform(location, 4326))) AS lat, resource, rating from events LIMIT 1000;")
-	.then(data => {
-		geojson = {"type": "FeatureCollection",
-	    				 "features": data.map(cord =>
-				 			 	feature = {"type": "Feature",
-				  								 "properties": {"resource": cord.resource, "rating": cord.rating},
-													 "geometry":   {"type":"Point","coordinates":[cord.long, cord.lat]}})
-							}
-		res.end(JSON.stringify(geojson));
-	})
-	.catch(error => {
-  	console.log('ERROR:', error);
-  })
-})
 
 app.get('/-/health', (req, res) => {
 	app.db.none("select true");

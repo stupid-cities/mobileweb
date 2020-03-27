@@ -1,0 +1,84 @@
+mixin darkHeader(title)
+	header.header--large--dark
+		h1= title
+
+mixin lightHeader(title)
+	header.header--large
+		h2= title
+
+mixin smallHeader(title)
+	h3.heading--small= title
+
+//- can be camera, map, frown, pin, meh, smile, upload, user, alert, close, right, left, up, down, info
+mixin svg(iconname)
+	case iconname
+		when 'camera'
+			include ../public/images/svgs/camera.svg
+		when 'map'
+				include ../public/images/svgs/map.svg
+		when 'frown'
+			include ../public/images/svgs/frown.svg
+		when 'pin'
+			include ../public/images/svgs/map-pin.svg
+		when 'meh'
+			include ../public/images/svgs/meh.svg
+		when 'smile'
+			include ../public/images/svgs/smile.svg
+		when 'upload'
+			include ../public/images/svgs/upload.svg
+		when 'alert'
+			include ../public/images/svgs/alert.svg
+		when 'user'
+			include ../public/images/svgs/user.svg
+		when 'close'
+			include ../public/images/svgs/x.svg
+		when 'up'
+			include ../public/images/svgs/chevron-up.svg
+		when 'down'
+			include ../public/images/svgs/chevron-down.svg
+		when 'left'
+			include ../public/images/svgs/chevron-left.svg
+		when 'right'
+			include ../public/images/svgs/chevron-right.svg
+		when 'info'
+			include ../public/images/svgs/info.svg
+
+mixin button(text)
+	button.btn--regular= text
+
+mixin actionButton(text, labelid, svg)
+	button.btn--action(aria-labelledby=labelid)
+		span(id=labelid)= text
+		+svg(svg)
+
+mixin uiButton(text, labelid, svg)
+	button.btn--ui(aria-labelledby=labelid)
+		span(id=labelid)= text
+		+svg(svg)
+
+mixin closeButton()
+	button.close(aria-labelledby='label-close' type="button")
+		span#label-close Close
+		+svg('close')
+
+mixin moodRadios()
+	.pick-mood
+		input(type="radio" id="happy" name="mood" value="0")
+		label(for="happy" class="mood--happy")
+			span Happy
+			+svg('smile')
+
+		input(type="radio" id="sad" name="mood" value="1")
+		label(for="sad" class="mood--meh")
+			span Sad
+			+svg('meh')
+
+		input(type="radio" id="angry" name="mood" value="2")
+		label(for="angry" class="mood--sad")
+			span Angry
+			+svg('frown')
+
+		input(type="radio" id="danger" name="mood" value="3")
+		label(for="danger" class="mood--angry")
+			span Danger
+			+svg('alert')

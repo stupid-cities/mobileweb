@@ -1,0 +1,26 @@
+.page-home {}
+
+.page-home .header-main {
+	flex-grow: 1;
+	padding: calc(var(--size)*3) calc(var(--size)*2);
+	text-align: center;
+}
+.page-home .header-main .logo-full {
+	padding: 0px calc(var(--size)*2);
+}
+.page-home .header-main .logo-full svg {width: 100%;}
+
+
+.page-home .intro {
+	flex-grow: 1;
+	box-sizing: border-box;
+	padding: calc(var(--size)*2);
+	text-align: center;
+}
+
+.page-home p {
+	margin-bottom: calc(var(--size)*2);
+}
+.page-home .btn--regular {
+	margin-left: var(--size);
+}

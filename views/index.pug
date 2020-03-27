@@ -1,91 +1,31 @@
-extends layout
+extends _layout
+include _components
+
+prepend head
+	- let title = 'Home'
+	- let description = 'Stupid Cities is a project to collect data about problems you encounter within your city or local area'
+
+prepend body
+	- let bodyClass = 'page-home'
+	- let hasInfo = false
+
 block content
-	<div id="map"></div>
-	<pre id="coordinates" class="coordinates"></pre>
+	header.header-main.back-dark
+		p Welcome to
+		.logo-full
+			include ../public/images/logo.svg
+			h1(aria-label="Stupid Cities") Stupid Cities
 
-	<div class="map-overlay top">
-		<div class="map-overlay-inner">
-			<h2>Record</h2>
-			form(method='post' enctype='multipart/form-data')
-				.note Click a location on the map and add a photo of something that effects your journey through public space.
-				input(type='file' name='fileupload' accept="image/*;capture=camera" label="Choose image" )
-				input(type='hidden' name='long' id='long')
-				input(type='hidden' name='lat' id='lat')
-				.note(class='license') By uploading photos you agree to allow StupidCities.com the right to reuse, modify and share.
-				input(type='submit' value='Save' class='btn btn-primary mr-2 copyable')
+	section.intro.back-light
+		p Our cities are badly designed, exclude and endanger
 
-	script.
-		mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZXBod2lsayIsImEiOiJjazVxcDRtY3YwNGVqM2xvNnJobTB0cHpjIn0.C-6rOSTM39XSSutwoOurkA';
-		var coordinates = document.getElementById('coordinates');
-		var longInput = document.getElementById('long');
-		var latInput = document.getElementById('lat');
-		var map = new mapboxgl.Map({
-		container: 'map',
-		style: 'mapbox://styles/mapbox/streets-v11',
-		center: [-2.3599, 51.3758],
-		zoom: 12
-		});
+		p Tag the glitches you find
+			a.btn--regular(href="add")
+				+svg('pin')
+				| Tag
 
-		locate = new mapboxgl.GeolocateControl({
-		positionOptions: {
-			enableHighAccuracy: true
-		},
-			trackUserLocation: false
-		})
-		map.addControl(locate);
+		p View other's contributions
+			a.btn--regular(href="map")
+				+svg('map')
+				| Map
 
-
-		var marker = new mapboxgl.Marker({
-		draggable: true
-		})
-		.setLngLat([0,0])
-		.addTo(map);
-
-		var nav = new mapboxgl.NavigationControl();
-		map.addControl(nav, 'top-right');
-
-		locate.on('geolocate', function(pos){
-			var coords = pos.coords;
-			marker.setLngLat([coords.longitude, coords.latitude]);
-			updateLocationData(coords.longitude, coords.latitude);
-		});
-
-		var options = {
-			enableHighAccuracy: true,
-			timeout: 5000,
-			maximumAge: 0
-		};
-
-		function success(pos) {
-			var coords = pos.coords;
-			marker.setLngLat([coords.longitude, coords.latitude]);
-			updateLocationData(coords.longitude, coords.latitude);
-			map.flyTo({center: [coords.longitude,coords.latitude] , zoom: 15});
-		}
-
-		function error(err) {
-			console.warn(`ERROR(${err.code}): ${err.message}`);
-		}
-
-		navigator.geolocation.getCurrentPosition(success, error, options)
-
-		var circleMarker;
-		map.on('click', function(e) {
-		    circleMarker = marker
-				.setLngLat(e.lngLat)
-				.addTo(map);
-				var coords = e.lngLat;
-				updateLocationData(coords.lng,coords.lat);
-		});
-
-		function onDragEnd() {
-			var lngLat = marker.getLngLat();
-			updateLocationData(lngLat.lng, lngLat.lat);
-		}
-
-		function updateLocationData(lng, lat){
-			longInput.value = lng;
-			latInput.value = lat;
-		}
-
-		marker.on('dragend', onDragEnd);

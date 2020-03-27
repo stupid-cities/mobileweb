@@ -1,0 +1,20 @@
+.page-add {}
+
+
+/* form styling - very much a hack to center labels & overlays */
+.page-add .form-upload {
+	position: absolute;
+	left: 50%; bottom: 0px;
+}
+.page-add .input-upload {
+	margin-left: -3rem;
+	text-align: center;
+}
+.page-add .input-upload input {width: 6rem;}
+
+/* box */
+.save-image {
+	position: absolute;
+	top: -100px; left: -150px;
+	width: 300px;
+}

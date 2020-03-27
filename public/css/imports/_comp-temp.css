@@ -11,3 +11,12 @@
 }
 
 h2 {margin: 1rem 0;}
+
+.container {
+	grid-template-rows: auto;
+	height: auto;
+}
+
+.wrapper {
+	height: auto;
+}

@@ -1,0 +1,31 @@
+/* add page form */
+.input-upload input {
+	visibility: hidden;
+	display: block;
+}
+
+/* mood radios */
+.pick-mood input {
+	visibility: hidden;
+}
+
+.pick-mood label {
+	display: inline-block;
+	padding: calc(var(--size)*2);
+	background: none;
+	-webkit-mask-image: radial-gradient(closest-side,black 60%, transparent 99%);
+}
+.pick-mood label span {display: none;}
+
+.pick-mood input:checked + label.mood--happy {
+	background-color: var(--secTwo);
+}
+.pick-mood input:checked + label.mood--meh {
+	background-color: var(--secOne);
+}
+.pick-mood input:checked + label.mood--sad {
+	background-color: var(--primOne);
+}
+.pick-mood input:checked + label.mood--angry {
+	background-color: var(--primTwo);
+}

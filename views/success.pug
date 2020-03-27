@@ -1,40 +1,53 @@
-extends layout
+extends _layout
+include _components
+
+prepend head
+	- let title = 'Success | Stupid Cities'
+	- let description = 'Image upload has been successful, if you want you can add more detail to your image'
+
+append head
+//- add any unique head links & scripts
+
+prepend body
+	- let bodyClass = 'page-success'
+	- let hasInfo = false
+
 block content
-	div(style='text-align:center')
-		h1 Thanks! We have saved your info.
+	+darkHeader('Thanks! Your tag has been saved')
 
-		<section id="forms" class="container pb-5">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="col-lg-12">Are there any more details you want to add?<br/><br/></div>
-				form(role="form" action="/events/"+eventId method="POST")
-					<div class="form-group row was-validated copyable">
-					<label class="col-lg-2 col-form-label form-control-label text-muted">Impact</label>
-					<label style="padding:10px;" for="happy"><img src="/images/happy_deselected.png" alt="Happy" /><br><input type="radio" name="emotion" id="happy" value="0" />Happy</label>
-					<label style="padding:10px;" for="sad"><img src="/images/sad_deselected.png" alt="Sad" /><br><input type="radio" name="emotion" id="sad" value="1" />Sad</label>
-					<label style="padding:10px;" for="angry"><img src="/images/angry_deselected.png" alt="Angry" /><br><input type="radio" name="emotion" id="angry" value="2" />Angry</label>
-					<label style="padding:10px;" for="danger"><img src="/images/danger_deselected.png" alt="Danger" /><br><input type="radio" name="emotion" id="danger" value="3"/>Danger</label>
-					</div>
-					<div class="form-group row was-validated copyable">
-					<label class="col-lg-2 col-form-label form-control-label text-muted">Category</label>
-					<label style="padding:10px;" for="build"><input type="radio" name="category" id="design" value="design" />Street design</label>
-					<label style="padding:10px;" for="obstacle"><input type="radio" name="category" id="obstacle" value="obstacle" />Temporary Obstacle</label>
-					<label style="padding:10px;" for="other"><input type="radio" name="category" id="other" value="other" />Other</label>
-					</div>
-					<div class="form-group row was-validated copyable">
-						<label class="col-lg-2 col-form-label form-control-label text-muted">Notes</label>
-						<div class="col-lg-10">
-							<textarea class="form-control" type="text" id="notes" name="notes"></textarea>
-						</div>
-					</div>
-					<label class="col-lg-2 col-form-label form-control-label"></label>
-					<div class="col-lg-10">
-						input(type='submit' value='Save' class='btn btn-primary mr-2 copyable')
-					</div>
-			</div>
-		</div>
-		<br/>
-		a(href='/') Back to map
-		</div>
+	.form
+		p Are there any more details you would like to add?
 
-		</section>
+		form(role="form" action="/events/"+eventId method="POST")
+			h3 How do you feel? (select one)
+			+moodRadios()
+
+			h3 Category
+
+			.pick-cat
+				input(type="radio" id="design" name="category" value="design")
+				label(for="design") Street Design
+
+				input(type="radio" id="obstacle" name="category" value="obstacle")
+				label(for="obstacle") Temporary Obstacle
+
+				input(type="radio" id="other" name="category" value="other")
+				label(for="other") Other
+
+			h3 Anything Else?
+
+			.notes
+				label(for="notes") Notes
+				textarea(name="notes" id="notes" aria-label="Add a note")
+
+
+			input(type='submit' value='Save' class='btn--regular')
+
+		a(href='add') Back to map
+
+
+prepend overlays
+//- any info errors success etc
+
+block scripts
+//- page unique scripts

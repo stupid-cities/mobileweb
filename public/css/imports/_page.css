@@ -1,0 +1,53 @@
+/* contains both screen & overlays */
+.container {
+	width: 100vw; height: 100vh;
+	display: grid;
+	grid-template-columns: 100vw;
+	grid-template-rows: 100vh;
+}
+
+.wrapper {
+	grid-area: 1 / 1 / 2 / 2;
+	display: flex;
+	flex-direction: column;
+
+	width: 100vw; height: 100vh;
+	max-width: 900px;
+	margin: 0px auto;
+}
+
+.overlays {
+	grid-area: 1 / 1 / 2 / 2;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	z-index: 99;
+	background-color: hsla(0, 0%, 100%, 0.5);
+}
+
+#map {
+	flex-grow: 1;
+}
+
+/* header & navs - can be split out into a seperate file really */
+.header-main {
+	padding: var(--size);
+	box-sizing: border-box;
+}
+.header-main h1 {
+	display: none;
+}
+.header-main nav {
+	display: flex;
+	justify-content: space-between;
+}
+.header-main nav a {
+	color: var(--light);
+}
+
+#label-homelink ~ svg {
+	width: calc(var(--size)*3);
+}

@@ -1,0 +1,214 @@
+extends _layout
+include _components
+
+prepend head
+  - let title = 'Add'
+  - let description = 'Record a point of distruption'
+
+append head
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet" />
+
+prepend body
+  - let bodyClass = 'page-add'
+  - let hasInfo = true;
+
+block content
+  header.header-main.back-dark
+    h1(aria-hidden="false") Stupid Cities
+    nav
+      a.btn--ui(href="/" aria-labelledby="label-homelink")
+        span#label-homelink Go to homescreen
+        include ../public/images/SC.svg
+
+      button#infoIcon.btn--ui(aria-labelledby='label-info')
+        span#label-info Information
+        +svg('info')
+
+      a.btn--ui(href="map" aria-labelledby='label-maplink')
+        span#label-maplink Go to map
+        +svg('map')
+
+  #map
+  <pre id="coordinates" class="coordinates"></pre>
+
+  section.form-upload
+    form(method='post' enctype='multipart/form-data')
+      .input-upload
+        label.btn--action(for="fileupload" aria-labelledby="label-upload")
+          span#label-upload Add Image
+          +svg('camera')
+
+        input(type='file' name='fileupload' id="fileupload" accept="image/*")
+
+      input(type='hidden' name='long' id='long')
+      input(type='hidden' name='lat' id='lat')
+
+      .alert.save-image.hidden
+        p
+        input(type='submit' value='Save' class='btn--regular')
+        +closeButton()
+
+prepend overlays
+  .alert.info(class=alert ? 'hidden' : '')
+    p Tap a location on the map and add a photo of something that effects your journey through public space, by tapping on the icon below.
+    p.license We save the position and the image you choose. We do #[strong not] save any personal data. By uploading photos you agree to allow StupidCities.com the right to reuse, modify and share.
+    +closeButton()
+
+
+block scripts
+  script.
+    mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZXBod2lsayIsImEiOiJjazVxcDRtY3YwNGVqM2xvNnJobTB0cHpjIn0.C-6rOSTM39XSSutwoOurkA';
+    var coordinates = document.getElementById('coordinates');
+    var longInput = document.getElementById('long');
+    var latInput = document.getElementById('lat');
+    var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [-2.3599, 51.3758],
+    zoom: 12
+    });
+
+    locate = new mapboxgl.GeolocateControl({
+    positionOptions: {
+      enableHighAccuracy: true
+    },
+      trackUserLocation: false
+    })
+    map.addControl(locate);
+
+
+    var marker = new mapboxgl.Marker({
+    draggable: true
+    })
+    .setLngLat([0,0])
+    .addTo(map);
+
+    var nav = new mapboxgl.NavigationControl();
+    map.addControl(nav, 'top-right');
+
+    locate.on('geolocate', function(pos){
+      var coords = pos.coords;
+      marker.setLngLat([coords.longitude, coords.latitude]);
+      updateLocationData(coords.longitude, coords.latitude);
+    });
+
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    function success(pos) {
+      var coords = pos.coords;
+      marker.setLngLat([coords.longitude, coords.latitude]);
+      updateLocationData(coords.longitude, coords.latitude);
+      map.flyTo({center: [coords.longitude,coords.latitude] , zoom: 15});
+    }
+
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error, options)
+
+    var circleMarker;
+    map.on('click', function(e) {
+        circleMarker = marker
+        .setLngLat(e.lngLat)
+        .addTo(map);
+        var coords = e.lngLat;
+        updateLocationData(coords.lng,coords.lat);
+    });
+
+    function onDragEnd() {
+      var lngLat = marker.getLngLat();
+      updateLocationData(lngLat.lng, lngLat.lat);
+    }
+
+    function updateLocationData(lng, lat){
+      longInput.value = lng;
+      latInput.value = lat;
+    }
+
+    marker.on('dragend', onDragEnd);
+
+    // image upload flow
+    let imageField = document.querySelector('.input-upload input');
+    let saveBox = document.querySelector('.save-image');
+
+    // close box
+    let butEl = saveBox.lastElementChild;
+    butEl.addEventListener('click', () => {
+      showHide(saveBox);
+    })
+
+    function getFileInfo() {
+
+      let oldFile = imageField.files[0];
+      // check for a file
+      let toDisplay;
+      if (imageField.files.length > 0) {
+
+        toDisplay = oldFile.name;
+        let newFile = compressImage(oldFile)
+
+        // overwrite file - this is terrible but can't think of another way atm
+        imageField.files[0] = newFile;
+
+      } else {
+        toDisplay = 'Sorry we didn\'t quite get your file, please close this box and try again'
+      }
+      // probably should check type but... (something like this)
+      //- if (!file.type.match(/image.*/)) {
+      //-   // this file is not an image.
+      //- };
+
+      saveBox.querySelector('p').innerHTML = toDisplay;
+
+      if (saveBox.classList.contains('hidden')) {
+        showHide(saveBox);
+      }
+    }
+
+    // there is literally no error handling here!
+    function compressImage(imgFile) {
+
+      // I mean we can essentially show a preview now
+      let preview = document.createElement("img");
+      preview.src = window.URL.createObjectURL(imgFile);
+
+      let canvas = document.createElement('canvas');
+
+      // resize image
+      const MAX_WIDTH = 1024;
+      const MAX_HEIGHT = 768;
+      let width = preview.width;
+      let height = preview.height;
+
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+      canvas.width = width;
+      canvas.height = height;
+
+      let ctx = canvas.getContext('2d');
+      ctx.drawImage(preview, 0, 0, width, height);
+
+      // WE CAN MINIPULATE THE IMAGE HERE IF WE WANT TOO \o/
+
+      const NEWFILE = canvas.toBlob((b) => {return new File([b], imgFile.name)});
+
+      return NEWFILE;
+
+    }
+
+    imageField.addEventListener('change', getFileInfo);

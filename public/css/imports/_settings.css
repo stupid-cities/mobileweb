@@ -12,7 +12,7 @@
 	--darkPink: #93005b;
 	--yellow: #ffd406;
 	--white: #f1f1f1;
-	--black: #000036;
+	--black: #1b1b24;
 
 	--light: var(--white);
 	--dark: var(--black);
@@ -27,6 +27,7 @@
 }
 
 /* utility classes */
+.hidden {display: none !important;}
 
 /* backgrounds */
 .back-light {

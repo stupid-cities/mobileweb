@@ -1,0 +1,25 @@
+//- this isn't used and doesn't contain anything useful, but if you need a new page copy this
+
+extends _layout
+include _components
+
+prepend head
+	- let title = 'TITLE HERE'
+	- let description = 'DESC HERE'
+
+append head
+//- add any unique head links & scripts
+
+prepend body
+	- let bodyClass = 'page-...'
+	- let hasInfo = false //- if you want info over lay to show up set to true
+
+
+block content
+//- main content
+
+prepend overlays
+//- any info errors success etc
+
+block scripts
+//- page unique scripts

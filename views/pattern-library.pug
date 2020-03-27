@@ -1,4 +1,8 @@
-extends layout
+extends _layout
+
+append head
+	<link href="/css/imports/_comp-temp.css" rel="stylesheet" />
+
 block content
 
 	h2 colours
@@ -18,23 +22,35 @@ block content
 
 	mixin darkHeader(title)
 		header.header--large--dark
-			h1 title
+			h1= title
+
 	+darkHeader('Large Dark Header')
+	p= `+darkHeader(titleHere)`
 
-	header.header--large
-		h1 Large header
+	mixin lightHeader(title)
+		header.header--large
+			h2= title
 
-	h3.heading--small Small heading
+	+lightHeader('Large Light Header')
+	p= `+lightHeader(titleHere)`
+
+	mixin smallHeader(title)
+		h3.heading--small= title
+
+	+smallHeader('Small heading')
+	p= `+smallHeader(titleHere)`
 
 	p All text should be in a paragraph like this one Lorem ipsum dolor, sit amet consectetur adipisicing elit. #[a(href="#") Ab aliquam voluptates tempora] maiores minus sint, quidem officia nisi quod similique excepturi fugiat alias molestias, debitis amet nulla nostrum, eaque at.
 
 	h2 Buttons & Icons
 
-	//- can be camera, frown, pin, meh, smile, upload, user, alert, close, right, left, up, down, info
+	//- can be camera, map, frown, pin, meh, smile, upload, user, alert, close, right, left, up, down, info
 	mixin svg(iconname)
 		case iconname
 			when 'camera'
 				include ../public/images/svgs/camera.svg
+			when 'map'
+				include ../public/images/svgs/map.svg
 			when 'frown'
 				include ../public/images/svgs/frown.svg
 			when 'pin'
@@ -64,6 +80,7 @@ block content
 
 
 	+svg('camera')
+	+svg('map')
 	+svg('frown')
 	+svg('pin')
 	+svg('meh')
@@ -77,16 +94,58 @@ block content
 	+svg('left')
 	+svg('right')
 	+svg('info')
+	p= '+svg(whichSvg) can be camera, frown, pin, meh, smile, upload, user, alert, close, right, left, up, down, info'
 
-	button.btn--regular Regular
+	mixin button(text)
+		button.btn--regular= text
+	+button('Regular')
+	p= `+button(textHere) This is a regular button`
 
-	button.btn--action(aria-labelledby="label")
-		span#label action
-		+svg('camera')
+	mixin actionButton(text, labelid, svg)
+		button.btn--action(aria-labelledby=labelid)
+			span(id=labelid)= text
+			+svg(svg)
+	+actionButton('action', 'action', 'camera')
+	p= `+actionButton(label, labelid, whichSVG) svg same as above`
 
-	button.btn--ui(aria-labelledby="uilabel")
-		span#uilabel action
-		+svg('left')
+	mixin uiButton(text, labelid, svg)
+		button.btn--ui(aria-labelledby=labelid)
+			span(id=labelid)= text
+			+svg(svg)
+	+uiButton('ui', 'ui', 'left')
+	p= `+uiButton(label, labelid, whichSVG) svg same as above`
+
+	mixin closeButton()
+		button.close(aria-labelledby='label-close' type="button")
+			span#label-close Close
+			+svg('close')
+	+closeButton()
+	p= `+closeButton for use with overlays`
+
+	mixin moodRadios()
+		.pick-mood
+			input(type="radio" id="happy" name="mood" value="0")
+			label(for="happy" class="mood--happy")
+				span Happy
+				+svg('smile')
+
+			input(type="radio" id="sad" name="mood" value="1")
+			label(for="sad" class="mood--meh")
+				span Sad
+				+svg('meh')
+
+			input(type="radio" id="angry" name="mood" value="2")
+			label(for="angry" class="mood--sad")
+				span Angry
+				+svg('frown')
+
+			input(type="radio" id="danger" name="mood" value="3")
+			label(for="danger" class="mood--angry")
+				span Danger
+				+svg('alert')
+
+	+moodRadios()
+
 
 	div.mood--happy.btn--action(aria-labelledby="moodlabel")
 		span#moodlabel happy

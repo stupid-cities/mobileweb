@@ -66,7 +66,7 @@ table {
 	--darkPink: #93005b;
 	--yellow: #ffd406;
 	--white: #f1f1f1;
-	--black: #000036;
+	--black: #1b1b24;
 
 	--light: var(--white);
 	--dark: var(--black);
@@ -80,6 +80,7 @@ table {
 
 }
 /* utility classes */
+.hidden {display: none !important;}
 /* backgrounds */
 .back-light {
 	background: #f1f1f1 url('../../images/stone.png') no-repeat center center;
@@ -87,7 +88,7 @@ table {
 	background-size: cover;
 }
 .back-dark {
-	background: #000036 url('../../images/stone.png') no-repeat center center;
+	background: #1b1b24 url('../../images/stone.png') no-repeat center center;
 	background: var(--dark) url('../../images/stone.png') no-repeat center center;
 	background-size: cover;
 	background-blend-mode: multiply;
@@ -95,7 +96,7 @@ table {
 	color: var(--light);
 }
 .camera-overlay {
-	background: #000036 url('../../images/overlay.png') no-repeat center center;
+	background: #1b1b24 url('../../images/overlay.png') no-repeat center center;
 	background: var(--dark) url('../../images/overlay.png') no-repeat center center;
 	background-size: cover;
 }
@@ -103,18 +104,6 @@ table {
 	outline: 4px auto #1cc9fe !important;
 	outline: 4px auto var(--secOne) !important;
 }
-.colours li:nth-of-type(1) {background-color: #f1f1f1;background-color: var(--light);}
-.colours li:nth-of-type(2) {background-color: #000036;background-color: var(--dark);}
-.colours li:nth-of-type(3) {background-color: #ffd406;background-color: var(--primOne);}
-.colours li:nth-of-type(4) {background-color: #ff1694;background-color: var(--primTwo);}
-.colours li:nth-of-type(5) {background-color: #1cc9fe;background-color: var(--secOne);}
-.colours li:nth-of-type(6) {background-color: #4afa58;background-color: var(--secTwo);}
-.colours li:nth-of-type(7) {background-color: #93005b;background-color: var(--textAlt);}
-[class*="back"], .camera-overlay {
-	height: 200px; width: 200px;
-}
-h2 {margin: 1rem 0;}
-/* remove this for production */
 :root {
 	--fontSize: calc(var(--size)*1.2);
 	--headerBig: calc(var(--fontSize)*1.6);
@@ -131,8 +120,8 @@ body {
 	background-color: var(--light);
 	font-family: 'Nanum Gothic', sans-serif;
 	font-family: var(--font);
-	line-height: 1.3;
-	color: #000036;
+	line-height: 1.4;
+	color: #1b1b24;
 	color: var(--dark);
 }
 @media screen and (max-width: 700px) {
@@ -141,6 +130,8 @@ body {
 	}
 }
 p {
+	margin-bottom: 1rem;
+	margin-bottom: var(--size);
 	font-size: calc(1rem*1.2);
 	font-size: var(--fontSize);
 }
@@ -158,9 +149,9 @@ a:hover, a:focus, a:active {
 	font-weight: bold;
 }
 .header--large--dark {
-	padding: 1rem;
-	padding: var(--size);
-	background-color: #000036;
+	padding: 1rem calc(1rem*2);
+	padding: var(--size) calc(var(--size)*2);
+	background-color: #1b1b24;
 	background-color: var(--dark);
 }
 .header--large--dark h1,
@@ -174,8 +165,8 @@ a:hover, a:focus, a:active {
 	color: var(--light);
 }
 .header--large {
-	padding: 1rem;
-	padding: var(--size);
+	padding: 1rem calc(1rem*2);
+	padding: var(--size) calc(var(--size)*2);
 }
 .header--large h1,
 .header--large h2,
@@ -185,6 +176,7 @@ a:hover, a:focus, a:active {
 	font-size: var(--headerBig);
 	font-weight: bold;
 }
+svg {width: calc(1rem*2);width: calc(var(--size)*2);}
 .btn {
 
 }
@@ -194,7 +186,7 @@ a:hover, a:focus, a:active {
 	padding: calc(var(--size)/2) var(--size);
 	background-color: #f1f1f1;
 	background-color: var(--light);
-	border: 6px solid #000036;
+	border: 6px solid #1b1b24;
 	border: 6px solid var(--dark);
 	font-family: "Courier New", monospace;
 	font-family: var(--fontAlt);
@@ -204,12 +196,33 @@ a:hover, a:focus, a:active {
 }
 .btn--regular:hover {
 	cursor: pointer;
-	background-color: #000036;
+	background-color: #1b1b24;
 	background-color: var(--dark);
 	border: 6px solid #f1f1f1;
 	border: 6px solid var(--light);
 	color: #f1f1f1;
 	color: var(--light);
+}
+.btn--regular svg {
+	display: inline-block;
+	padding-right: 1rem;
+	padding-right: var(--size);
+}
+.close {
+	padding: calc(1rem/2) 0;
+	padding: calc(var(--size)/2) 0;
+	border: none;
+	background: none;
+}
+.close:hover {
+	cursor: pointer;
+	background-color: #1b1b24;
+	background-color: var(--dark);
+	color: #f1f1f1;
+	color: var(--light);
+}
+.close span {
+	display: none;
 }
 .btn--action {
 	display: inline-block;
@@ -222,10 +235,10 @@ a:hover, a:focus, a:active {
 .btn--action span {display: none;}
 .btn--ui {
 	display: inline-block;
-	padding: 1rem;
-	padding: var(--size);
-	background-color: #000036;
+	/* padding: var(--size); */
+	background-color: #1b1b24;
 	background-color: var(--dark);
+	border: none;
 }
 .btn--ui span {display: none;}
 .btn--ui svg {stroke: #f1f1f1;stroke: var(--light);}
@@ -249,7 +262,202 @@ a:hover, a:focus, a:active {
 	background-color: var(--primTwo);
 	background-image: none;
 }
-body { margin: 0; padding: 0; }
+/* add page form */
+.input-upload input {
+	visibility: hidden;
+	display: block;
+}
+/* mood radios */
+.pick-mood input {
+	visibility: hidden;
+}
+.pick-mood label {
+	display: inline-block;
+	padding: calc(1rem*2);
+	padding: calc(var(--size)*2);
+	background: none;
+	-webkit-mask-image: radial-gradient(closest-side,black 60%, transparent 99%);
+}
+.pick-mood label span {display: none;}
+.pick-mood input:checked + label.mood--happy {
+	background-color: #4afa58;
+	background-color: var(--secTwo);
+}
+.pick-mood input:checked + label.mood--meh {
+	background-color: #1cc9fe;
+	background-color: var(--secOne);
+}
+.pick-mood input:checked + label.mood--sad {
+	background-color: #ffd406;
+	background-color: var(--primOne);
+}
+.pick-mood input:checked + label.mood--angry {
+	background-color: #ff1694;
+	background-color: var(--primTwo);
+}
+/* for overlays container see _page.css */
+/* all boxes */
+.alert {
+	box-sizing: border-box;
+	position: relative;
+	width: 80vw; max-width: 700px;
+	padding: calc(1rem*1.5);
+	padding: calc(var(--size)*1.5);
+	background-color: #f1f1f1;
+	background-color: var(--light);
+	border: 4px solid #1b1b24;
+	border: 4px solid var(--dark);
+}
+.alert .close {
+	position: absolute;
+	top: 0px; right: 0px;
+}
+/* info (nav) */
+.info {
+}
+/* errors & successes - default styping is success */
+.message {
+	border-color: #4afa58;
+	border-color: var(--secTwo);
+}
+/* error specific */
+.error {
+	border-color: #ff1694;
+	border-color: var(--primTwo);
+}
+/* create file for each page & refactor later to pull out common parts */
+/* contains both screen & overlays */
+.container {
+	width: 100vw; height: 100vh;
+	display: grid;
+	grid-template-columns: 100vw;
+	grid-template-rows: 100vh;
+}
+.wrapper {
+	grid-area: 1 / 1 / 2 / 2;
+	display: flex;
+	flex-direction: column;
+
+	width: 100vw; height: 100vh;
+	max-width: 900px;
+	margin: 0px auto;
+}
+.overlays {
+	grid-area: 1 / 1 / 2 / 2;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	z-index: 99;
+	background-color: hsla(0, 0%, 100%, 0.5);
+}
+#map {
+	flex-grow: 1;
+}
+/* header & navs - can be split out into a seperate file really */
+.header-main {
+	padding: 1rem;
+	padding: var(--size);
+	box-sizing: border-box;
+}
+.header-main h1 {
+	display: none;
+}
+.header-main nav {
+	display: flex;
+	justify-content: space-between;
+}
+.header-main nav a {
+	color: #f1f1f1;
+	color: var(--light);
+}
+#label-homelink ~ svg {
+	width: calc(1rem*3);
+	width: calc(var(--size)*3);
+}
+.page-home {}
+.page-home .header-main {
+	flex-grow: 1;
+	padding: calc(1rem*3) calc(1rem*2);
+	padding: calc(var(--size)*3) calc(var(--size)*2);
+	text-align: center;
+}
+.page-home .header-main .logo-full {
+	padding: 0px calc(1rem*2);
+	padding: 0px calc(var(--size)*2);
+}
+.page-home .header-main .logo-full svg {width: 100%;}
+.page-home .intro {
+	flex-grow: 1;
+	box-sizing: border-box;
+	padding: calc(1rem*2);
+	padding: calc(var(--size)*2);
+	text-align: center;
+}
+.page-home p {
+	margin-bottom: calc(1rem*2);
+	margin-bottom: calc(var(--size)*2);
+}
+.page-home .btn--regular {
+	margin-left: 1rem;
+	margin-left: var(--size);
+}
+.page-add {}
+/* form styling - very much a hack to center labels & overlays */
+.page-add .form-upload {
+	position: absolute;
+	left: 50%; bottom: 0px;
+}
+.page-add .input-upload {
+	margin-left: -3rem;
+	text-align: center;
+}
+.page-add .input-upload input {width: 6rem;}
+/* box */
+.save-image {
+	position: absolute;
+	top: -100px; left: -150px;
+	width: 300px;
+}
+.page-success .form {
+	padding: calc(1rem*2);
+	padding: calc(var(--size)*2);
+	text-align: center;
+}
+.page-success .form h3 {
+	padding-bottom: 1rem;
+	padding-bottom: var(--size);
+}
+.page-success .form label,
+.page-success .form input,
+.page-success .form textarea {font-size: calc(1rem*1.2);font-size: var(--fontSize);}
+.page-success .form .pick-cat {
+	padding-bottom: calc(1rem*2);
+	padding-bottom: calc(var(--size)*2);
+}
+.page-success .form .pick-cat label {
+	padding: 0 calc(1rem*2) 0 calc(1rem/2);
+	padding: 0 calc(var(--size)*2) 0 calc(var(--size)/2);
+}
+.page-success .form .notes {
+	padding-bottom: calc(1rem*2);
+	padding-bottom: calc(var(--size)*2);
+}
+.page-success .form .notes label {
+	display: none;
+}
+.page-success .form .notes textarea {
+	width: 50vw; max-width: 500px;
+	height: 7rem;
+	border: 1px solid grey;
+}
+.page-success .form .btn--regular {
+	margin-bottom: 1rem;
+	margin-bottom: var(--size);
+}
+/* body { margin: 0; padding: 0; }
 #map { position: absolute; top: 0; bottom: 0; width: 100%; height: 100% }
 #panel { position: absolute; top: 5; bottom: 5; background: #ffffff; border: 1px; }
 .map-overlay { font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif; position: absolute; width: 25%; top: 0; left: 0; padding: 10px;}
@@ -257,12 +465,14 @@ body { margin: 0; padding: 0; }
 .map-overlay h2 {display: block;margin: 0 0 10px;}
 .map-overlay input {display: inline-block;width: 100%;position: relative;margin: 0;cursor: ew-resize; padding: 10px;}
 .license { font-size: 0.7rem; line-height: 15px; }
+
 @media screen and (max-width: 992px) {
 }
+
 @media screen and (max-width: 580px) {
   .map-overlay input{ font-size: 0.7rem; padding: 3px;}
   .map-overlay { font-size: 0.9rem; }
   .map-overlay {position: absolute; width: 85%; top: 0; left: 0;}
   .map-overlay h2 {font-size: 1.1rem; margin: 0 0 1px;}
   .license { font-size: 0.5rem; line-height: 15px; }
-}
+} */

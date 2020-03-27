@@ -1,6 +1,42 @@
-extends layout
+extends _layout
+include _components
+
+prepend head
+  - let title = 'Map'
+  - let description = 'This page displays a map and allows you to drop a pin and upload an image, along with comments, to record problems in your area'
+
+append head
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet" />
+
+prepend body
+  - let bodyClass = 'page-map'
+  - let hasInfo = true
+
 block content
-  <div id="map"></div>
+  header.header-main.back-dark
+    h1(aria-hidden="false") Stupid Cities
+    nav
+      a.btn--ui(href="/" aria-labelledby="label-homelink")
+        span#label-homelink Go to homescreen
+        include ../public/images/SC.svg
+
+      button#infoIcon.btn--ui(aria-labelledby='label-info')
+        span#label-info Information
+        +svg('info')
+
+      a.btn--ui(href="add" aria-labelledby='label-maplink')
+        span#label-maplink Go to add
+        +svg('pin')
+
+  #map
+
+prepend overlays
+  .alert.info(class=alert ? 'hidden' : '')
+    p Browse the map to see where there might be issues in your local area. You can also choose the list view
+    +closeButton()
+
+block scripts
   script.
     mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZXBod2lsayIsImEiOiJjazVxcDRtY3YwNGVqM2xvNnJobTB0cHpjIn0.C-6rOSTM39XSSutwoOurkA';
     var map = new mapboxgl.Map({
@@ -9,6 +45,8 @@ block content
       center: [-2.3820395, 51.3801519],
       zoom: 14,
     });
+    // Add zoom and rotation controls to the map.
+    map.addControl(new mapboxgl.NavigationControl());
 
     //var others   =  ['==', ['get', 'rating'], null];
     var good      = ['==', ['get', 'rating'], 0];

@@ -211,7 +211,6 @@ block scripts
 
     // there is literally no error handling here!
     function compressImage(imgFile) {
-      console.log(imgFile.size)
       // I mean we can essentially show a preview now
       let preview = document.createElement("img");
       preview.src = window.URL.createObjectURL(imgFile);

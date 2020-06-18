@@ -54,7 +54,7 @@ prepend dialogs
     .form
       p Are there any more details you would like to add?
 
-      form(role="form" action="/events/"+eventId method="POST" id="metadata")
+      form(role="form" action="/events" method="POST" id="metadata")
         h3 How do you feel? (select one)
         +moodRadios()
 
@@ -249,9 +249,10 @@ block scripts
         body.set('long', long.value);
         body.set('lat', lat.value);
 
-        let res = fetch('/add', {method: 'POST', body});
-        function awaitUpload(){
-          res.then(function(response){
+        let r = fetch('/add', {method: 'POST', body});
+        function awaitUpload(evt){
+          evt.preventDefault();
+          r.then(function(response){
             if(response.ok){
               return response.json();
             }
@@ -259,7 +260,9 @@ block scripts
             }
             }).then(function(response){
               metaForm.action = "/events/" + response.eventId;
+              metaForm.submit();
             });
+            return false;
         }
         metaForm.addEventListener('submit', awaitUpload);
         //if (response.ok){

@@ -164,6 +164,8 @@ block scripts
     //metadata
     let metaForm = document.querySelector('#metadata');
 
+    let dialogs = document.querySelector('.dialogs');
+
     // image upload flow
     let imageField = document.querySelector('.input-upload input');
     let saveBox = document.querySelector('.save-image');
@@ -180,6 +182,7 @@ block scripts
     })
 
     butEl2.addEventListener('click', () => {
+      showHide(dialogs);
       showHide(metaBox);
     })
 
@@ -199,7 +202,11 @@ block scripts
       //- };
 
       saveBox.querySelector('p').innerHTML = toDisplay;
-      let dialogs = document.querySelector('.dialogs');
+
+      if (dialogs.classList.contains('hidden')) {
+        showHide(dialogs);
+      }
+
       if (metaBox.classList.contains('hidden')) {
         metaForm.action = "";
         metaForm.reset();

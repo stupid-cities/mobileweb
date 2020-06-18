@@ -33,7 +33,7 @@ block content
   <pre id="coordinates" class="coordinates"></pre>
 
   section.form-upload
-    form(method='post' enctype='multipart/form-data')
+    form(method='post' enctype='multipart/form-data' id='fileselect')
       .input-upload
         label.btn--action(for="fileupload" aria-labelledby="label-upload")
           span#label-upload Add Image
@@ -48,6 +48,35 @@ block content
         p
         input(type='submit' value='Save' class='btn--regular')
         +closeButton()
+
+prepend dialogs
+  .alert.meta.hidden
+    .form
+      p Are there any more details you would like to add?
+
+      form(role="form" action="/events/"+eventId method="POST" id="metadata")
+        h3 How do you feel? (select one)
+        +moodRadios()
+
+        h3 Category
+
+        .pick-cat
+          input(type="radio" id="design" name="category" value="design")
+          label(for="design") Street Design
+
+          input(type="radio" id="obstacle" name="category" value="obstacle")
+          label(for="obstacle") Temporary Obstacle
+
+          input(type="radio" id="other" name="category" value="other")
+          label(for="other") Other
+
+        h3 Add a Story?
+
+        .notes
+          label(for="notes") Notes
+          textarea(name="notes" id="notes" aria-label="Add a note")
+        input(type='submit' value='Save' class='btn--regular')
+    +closeButton()
 
 prepend overlays
   .alert.info(class=alert ? 'hidden' : '')
@@ -133,29 +162,35 @@ block scripts
 
     marker.on('dragend', onDragEnd);
 
+    //metadata
+    let metaForm = document.querySelector('#metadata');
+
     // image upload flow
     let imageField = document.querySelector('.input-upload input');
     let saveBox = document.querySelector('.save-image');
+    let metaBox =  document.querySelector('.meta');
+
+    let fileuploadBox =  document.querySelector('#fileselect');
 
     // close box
     let butEl = saveBox.lastElementChild;
+    let butEl2 = metaBox.lastElementChild;
+
     butEl.addEventListener('click', () => {
       showHide(saveBox);
     })
 
-    function getFileInfo() {
+    butEl2.addEventListener('click', () => {
+      showHide(metaBox);
+    })
 
+    function getFileInfo() {
       let oldFile = imageField.files[0];
       // check for a file
       let toDisplay;
       if (imageField.files.length > 0) {
-
         toDisplay = oldFile.name;
-        let newFile = compressImage(oldFile)
-
-        // overwrite file - this is terrible but can't think of another way atm
-        imageField.files[0] = newFile;
-
+        compressImage(oldFile)
       } else {
         toDisplay = 'Sorry we didn\'t quite get your file, please close this box and try again'
       }
@@ -165,18 +200,22 @@ block scripts
       //- };
 
       saveBox.querySelector('p').innerHTML = toDisplay;
-
-      if (saveBox.classList.contains('hidden')) {
-        showHide(saveBox);
+      let dialogs = document.querySelector('.dialogs');
+      if (metaBox.classList.contains('hidden')) {
+        metaForm.action = "";
+        metaForm.reset();
+        fileuploadBox.reset();
+        showHide(metaBox);
       }
     }
 
     // there is literally no error handling here!
     function compressImage(imgFile) {
-
+      console.log(imgFile.size)
       // I mean we can essentially show a preview now
       let preview = document.createElement("img");
       preview.src = window.URL.createObjectURL(imgFile);
+      preview.onload = function(){
 
       let canvas = document.createElement('canvas');
 
@@ -203,12 +242,37 @@ block scripts
       let ctx = canvas.getContext('2d');
       ctx.drawImage(preview, 0, 0, width, height);
 
-      // WE CAN MINIPULATE THE IMAGE HERE IF WE WANT TOO \o/
+      canvas.toBlob((b) => {
+        let long = document.querySelector('#long');
+        let lat = document.querySelector('#lat');
+        let body = new FormData();
+        body.set('fileupload', b, imgFile.name || "file.jpg");
+        body.set('long', long.value);
+        body.set('lat', lat.value);
 
-      const NEWFILE = canvas.toBlob((b) => {return new File([b], imgFile.name)});
-
-      return NEWFILE;
-
+        let res = fetch('/add', {method: 'POST', body});
+        function awaitUpload(){
+          res.then(function(response){
+            if(response.ok){
+              return response.json();
+            }
+            else{
+            }
+            }).then(function(response){
+              metaForm.action = "/events/" + response.eventId;
+            });
+        }
+        metaForm.addEventListener('submit', awaitUpload);
+        //if (response.ok){
+        //  return response
+        //}
+        //const NEWFILE = new File([b], imgFile.name);
+        //const dt = new DataTransfer();  //Not supported on Safari
+        //dt.items.add(new File([b], imgFile.name));
+        //imageField.files = dt.files;
+      }
+      );
+      }
     }
 
     imageField.addEventListener('change', getFileInfo);

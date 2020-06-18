@@ -22,6 +22,8 @@ html
 			.container(class=bodyClass)
 				.wrapper
 					block content
+				.dialogs
+					block dialogs
 				.overlays(class=hasInfo ? '' : 'hidden')
 					block overlays
 						if alert
@@ -29,4 +31,5 @@ html
 								p=message
 								+closeButton()
 
-			block scripts
+			.map
+				block scripts

@@ -104,8 +104,7 @@ app.post('/add', upload.single('fileupload'), (req, res) => {
     			});
 		})
 	}else{
-		res.json({"alert": true})
-		//res.render('add');
+		res.json({"alert": true, "type": "error", "message": "We\'re sorry there was a problem uploading your image, please try again"})
 	}
 })
 

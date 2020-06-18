@@ -89,17 +89,12 @@ app.post('/add', upload.single('fileupload'), (req, res) => {
 		 		app.db.one("INSERT INTO events (location, resource) VALUES(ST_GeomFromText('POINT($1 $2)', 4326), $3) RETURNING id",
 		 			[parseFloat(req.body.long), parseFloat(req.body.lat), result.public_id])
 					.then(data => {
-						eventId= data.id
+						eventId = data.id
 						res.json({"eventId": eventId});
 					})
 						.catch(error => {
 							// send back to add page with error to try again
 							res.json({"alert": true, "type": "error", "message": "We\'re sorry there was a problem uploading your image, please try again"});
-							// res.render('add', {
-							// 	"alert": true,
-							// 	"type": "error",
-							// 	"message": "We\'re sorry there was a problem uploading your image, please try again"
-							// })
         			console.log('ERROR:', error); // print error;
     			});
 		})

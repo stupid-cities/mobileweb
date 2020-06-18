@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require("cookie-parser");
 const path = require('path')
 const multer = require('multer')
 const pug = require('pug')
@@ -22,6 +23,7 @@ const upload = multer({ storage: storage })
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cookieParser());
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 app.db = pgp(DB_URL)
@@ -32,7 +34,12 @@ app.get('/', (req, res) => {
 })
 // add a point
 app.get('/add', (req, res) => {
-	res.render('add')
+	hasInfo = true;
+	if(req.cookies && req.cookies['alert_shown']){
+			//User has seen alert, hide it.
+			hasInfo = false;
+	}
+	res.render('add', {hasInfo: hasInfo});
 })
 // populated map view
 app.get('/map', (req, res) => {
@@ -70,6 +77,7 @@ app.post('/events/:id', (req, res) => {
 		app.db.none("UPDATE events SET notes=$1, rating=$2, category=$3 where id=$4 AND (rating IS NULL)",
 		[notes, impact, category, eventId])
 	}
+	res.cookie('alert_shown', 'true', {expires: new Date(Date.now() + 8 * 3600000)})
 	res.redirect("/add")
 })
 // post lat/lng and image

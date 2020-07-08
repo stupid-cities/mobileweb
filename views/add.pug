@@ -72,7 +72,8 @@ prepend dialogs
         .notes
           label(for="notes") Notes
           textarea(name="notes" id="notes" aria-label="Add a note")
-        input(type='submit' value='Save' class='btn--regular')
+        <button value='save' class='btn--regular'>Save <div class="loading-spinner spinner hidden"></div></button>
+
     +closeButton()
 
 prepend overlays
@@ -256,6 +257,8 @@ block scripts
         let r = fetch('/add', {method: 'POST', body});
         function awaitUpload(evt){
           evt.preventDefault();
+          let spinner = document.querySelector('.spinner');
+          showHide(spinner);
           r.then(function(response){
             if(response.ok){
               return response.json();

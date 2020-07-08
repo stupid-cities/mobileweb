@@ -295,6 +295,67 @@ svg {width: calc(1rem*2);width: calc(var(--size)*2);}
 	background-color: #ff1694;
 	background-color: var(--primTwo);
 }
+.loading-spinner {
+  -webkit-animation-play-state: running;
+          animation-play-state: running;
+  opacity: 1;
+  position: relative;
+  align-items: center;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px 10px 0;
+}
+@-webkit-keyframes spinner {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+@keyframes spinner {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+.loading-spinner.-paused {
+  -webkit-animation-play-state: paused;
+          animation-play-state: paused;
+  opacity: 0.2;
+  transition: opacity linear 0.1s;
+}
+.loading-spinner::before {
+  -webkit-animation: 1.5s linear infinite spinner;
+          animation: 1.5s linear infinite spinner;
+  -webkit-animation-play-state: inherit;
+          animation-play-state: inherit;
+  border: solid 3px #1b1b24;
+  border: solid 3px var(--dark);
+  border-bottom-color: #f1f1f1;
+  border-bottom-color: var(--light);
+  border-radius: 50%;
+  content: "";
+  height: 20px;
+  left: 50%;
+  opacity: inherit;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 20px;
+  will-change: transform;
+}
+.loading-spinner.-paused + .btn {
+  background-color: #2ecc71;
+  color: #323232;
+}
+.loading-spinner-btn {
+  display: inline-block;
+  margin: 0 auto 40px;
+}
 /* for overlays container see _page.css */
 /* all boxes */
 .alert {

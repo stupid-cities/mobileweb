@@ -54,7 +54,7 @@ block scripts
     var angry     = ['==', ['get', 'rating'], 2];
     var danger    = ['==', ['get', 'rating'], 3];
 
-    var colors = ['red', 'orange', 'orange', 'red'];
+    var colors = ['green', 'orange', 'orange', 'red'];
 
 
     map.on('load', function() {
@@ -80,7 +80,7 @@ block scripts
         paint: {
           'circle-opacity': 0.6,
           'circle-stroke-color': ['case',
-            good,   'green',
+            good,   'red',
             danger,    'red',
             'green'],
           'circle-stroke-width': 3,

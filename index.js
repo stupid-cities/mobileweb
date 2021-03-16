@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser());
 app.use(express.static('public'))
 app.set('view engine', 'pug')
-app.db = pgp(DB_URL)
+app.db = pgp(DB_URL+"&ssl=true")
 
 // homepage
 app.get('/', (req, res) => {
